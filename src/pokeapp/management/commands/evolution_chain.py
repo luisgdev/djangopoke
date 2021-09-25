@@ -8,6 +8,8 @@ POKE_API: str = "https://pokeapi.co/api/v2/"
 
 def clean_db() -> None:
     Pokemon.objects.all().delete()
+    Stat.objects.all().delete()
+    Evolution.objects.all().delete()
     print("Database rows deleted!")
 
 def fetch_pokemon(name: str, chain_id: int) -> Pokemon:
@@ -31,7 +33,7 @@ def fetch_pokemon(name: str, chain_id: int) -> Pokemon:
                 pokemon=pokemon
             )
             stat.save()
-            print(f"Stat {stat.name} saved.")
+        print("Stats saved.")
     except:
         raise CommandError("Error fetching Pokemon")
     return pokemon
@@ -52,8 +54,7 @@ def fetch_evolution(id_: int) -> None:
             evolution: Evolution = Evolution(
                 evo_id=response["id"],
                 name=name,
-                evo_type=type_,
-                evo_chain=chain_id
+                evo_type=type_
             )
             evolution.save()
             print(f"Evolution: {evolution.name} saved.")
@@ -66,7 +67,6 @@ class Command(BaseCommand):
         parser.add_argument('chain_id', type=int)
     
     def handle(self, *args: Any, **options: Any) -> Optional[str]:
-        clean_db()
         try:
             fetch_evolution(options['chain_id'])
             self.stdout.write(self.style.SUCCESS("Data stored succesfuly!"))

@@ -14,6 +14,8 @@ from pathlib import Path
 
 from os import environ
 from dotenv import load_dotenv
+
+# This function loads project variables from .env file to virtual entvironment
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

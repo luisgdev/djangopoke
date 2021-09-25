@@ -1,10 +1,6 @@
 from django.db import models
 
 # Create your models here.
-from typing import List
-from django.db import models
-
-# Create your models here.
 
 
 class Pokemon(models.Model):
@@ -13,7 +9,7 @@ class Pokemon(models.Model):
     designed and managed by the Japanese companies Nintendo, Game Freak 
     and Creatures.
     """
-    poke_id = models.IntegerField()
+    poke_id = models.IntegerField(unique=True)
     name = models.CharField(max_length=128)
     height = models.IntegerField()
     weight = models.IntegerField()
@@ -47,7 +43,6 @@ class Evolution(models.Model):
     evo_id = models.IntegerField()
     name = models.CharField(max_length=128)
     evo_type = models.CharField(max_length=64)
-    evo_chain = models.IntegerField(null=True)
 
     def __str__(self) -> str:
         return self.name
